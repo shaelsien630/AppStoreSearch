@@ -25,7 +25,10 @@ struct SearchView: View {
                     if searchViewModel.isLoading { ProgressView() }
                     else { SearchResultView() } // 검색 결과 화면
                 } else if isEditing {
-                    RecentSearchMatchesView(trieWrapper: trieWrapper, inputText: $inputText) // 최근 검색 필터링
+                    RecentSearchMatchesView(trieWrapper: trieWrapper, inputText: $inputText, onSubmit: {
+                        searchAppList(text: inputText)
+                        isSearch = true
+                    }) // 최근 검색 필터링
                 } else {
                     RecentSearchView(trieWrapper: trieWrapper, inputText: $inputText, onSubmit: { // 최근 검색 클릭
                         searchAppList(text: inputText)

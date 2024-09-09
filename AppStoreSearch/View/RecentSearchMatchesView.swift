@@ -11,6 +11,8 @@ struct RecentSearchMatchesView: View {
     @ObservedObject var trieWrapper: TrieWrapper
     @Binding var inputText: String
     
+    var onSubmit: () -> Void
+    
     var body: some View {
         List {
             ForEach(trieWrapper.search(prefix: inputText), id: \.self) { result in
@@ -19,6 +21,11 @@ struct RecentSearchMatchesView: View {
                         .foregroundColor(.gray)
                     Text(result)
                 }
+                .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    inputText = result
+                    onSubmit()
+                }
             }
         }
         .listStyle(PlainListStyle())
@@ -26,7 +33,7 @@ struct RecentSearchMatchesView: View {
 }
 
 #Preview {
-    RecentSearchMatchesView(trieWrapper: TrieWrapper(words: []), inputText: .constant(""))
+    RecentSearchMatchesView(trieWrapper: TrieWrapper(words: []), inputText: .constant(""), onSubmit: {})
 }
 
 

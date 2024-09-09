@@ -10,6 +10,8 @@
 채택한 아키텍쳐: MVVM Architecture<br>
 기술 스택 : Swift, SwiftUI<br>
 
+<br>
+
 ## 2. 필수 기능
 
 ● 검색 화면<br>
@@ -28,6 +30,8 @@
 &nbsp; &nbsp; ○ 타이틀<br>
 &nbsp; &nbsp; ○ 스크린샷<br>
 &nbsp; &nbsp; ○ ‘더보기’ 기능을 포함하는 앱 설명 혹은 새로운 기능<br>
+
+<br>
 
 ## 3. 실행 화면
 

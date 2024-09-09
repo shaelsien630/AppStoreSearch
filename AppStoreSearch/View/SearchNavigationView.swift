@@ -11,12 +11,14 @@ import UIKit
 struct SearchNavigationView<Content: View>: UIViewControllerRepresentable {
     @Binding var inputText: String
     @Binding var isSearch: Bool
+    let placeholder: String
     var onSubmit: () -> Void
     var content: () -> Content
 
     func makeUIViewController(context: Context) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: context.coordinator.rootViewController)
         navigationController.navigationBar.prefersLargeTitles = true
+        navigationController.navigationItem.largeTitleDisplayMode = .always
         return navigationController
     }
 
@@ -28,7 +30,7 @@ struct SearchNavigationView<Content: View>: UIViewControllerRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(inputText: $inputText, isSearch: $isSearch, onSubmit: onSubmit, content: content)
+        return Coordinator(inputText: $inputText, isSearch: $isSearch, placeholder: placeholder, onSubmit: onSubmit, content: content)
     }
 
     class Coordinator: NSObject, UISearchResultsUpdating, UISearchBarDelegate {
@@ -36,11 +38,13 @@ struct SearchNavigationView<Content: View>: UIViewControllerRepresentable {
         @Binding var isSearch: Bool
         let searchController: UISearchController
         let rootViewController: UIHostingController<Content>
+        let placeholder: String
         var onSubmit: () -> Void
 
-        init(inputText: Binding<String>, isSearch: Binding<Bool>, onSubmit: @escaping () -> Void, content: @escaping () -> Content) {
+        init(inputText: Binding<String>, isSearch: Binding<Bool>, placeholder: String, onSubmit: @escaping () -> Void, content: @escaping () -> Content) {
             _inputText = inputText
             _isSearch = isSearch
+            self.placeholder = placeholder
             self.onSubmit = onSubmit
             searchController = UISearchController(searchResultsController: nil)
             rootViewController = UIHostingController(rootView: content())
@@ -49,7 +53,7 @@ struct SearchNavigationView<Content: View>: UIViewControllerRepresentable {
             searchController.searchResultsUpdater = self
             searchController.obscuresBackgroundDuringPresentation = false
             searchController.searchBar.delegate = self
-            searchController.searchBar.placeholder = "게임, 앱, 스토리 등"
+            searchController.searchBar.placeholder = placeholder
             rootViewController.navigationItem.searchController = searchController
             rootViewController.navigationItem.hidesSearchBarWhenScrolling = false
         }
@@ -67,6 +71,9 @@ struct SearchNavigationView<Content: View>: UIViewControllerRepresentable {
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             searchBar.resignFirstResponder()
             onSubmit()
+        }
+        
+        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         }
     }
 }

@@ -13,7 +13,7 @@ struct Application: Identifiable {
     let genres: [String]                // 설명 : genres
     let iconImageURL: String            // 아이콘 : artworkUrl100
     let ratingScore: Double             // 별점 : averageUserRating
-    let downloadCount: Int              // 다운로드 횟수 : userRatingCount
+    let ratingCount: Int                // 다운로드 횟수 : userRatingCount
     let recommenedAge: String           // 권장 나이 : contentAdvisoryRating
     let baseLanguage: [String]          // 언어 : languageCodesISO2A
     let minimumOsVersion: String        // 최소지원 버전 : minimumOsVersion

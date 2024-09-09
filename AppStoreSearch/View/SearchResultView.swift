@@ -13,13 +13,20 @@ struct SearchResultView: View {
     var body: some View {
         List {
             ForEach(0..<searchViewModel.apps.count, id: \.self) { index in
-                SearchResultRowView(index: index)
+                NavigationLink {
+                    DetailView(index: index)
+                } label: {
+                    SearchResultRowView(index: index)
+                }
+                .listRowSeparator(.hidden)
+                .padding(.leading)
             }
         }
-        .listStyle(PlainListStyle())
+        .listStyle(.plain)
     }
 }
 
 #Preview {
     SearchResultView()
+        .environmentObject(SearchViewModel())
 }

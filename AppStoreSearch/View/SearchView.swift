@@ -15,18 +15,15 @@ struct SearchView: View {
     @State private var isSearch: Bool = false
     
     var body: some View {
-        SearchNavigationView(inputText: $inputText, isSearch: $isSearch, onSubmit: { // 직접 검색
+        SearchNavigationView(inputText: $inputText, isSearch: $isSearch, placeholder: "게임, 앱, 스토리 등", onSubmit: { // 직접 검색
             searchAppList(text: inputText)
             trieWrapper.insert(word: inputText)
             isSearch = true
         }) {
             VStack {
                 if isSearch {
-                    if searchViewModel.isLoading {
-                        ProgressView()
-                    } else {
-                        SearchResultView() // 검색 결과 화면
-                    }
+                    if searchViewModel.isLoading { ProgressView() }
+                    else { SearchResultView() } // 검색 결과 화면
                 } else if isEditing {
                     RecentSearchMatchesView(trieWrapper: trieWrapper, inputText: $inputText) // 최근 검색 필터링
                 } else {
@@ -38,6 +35,7 @@ struct SearchView: View {
             }
             .navigationTitle("검색")
         }
+        .ignoresSafeArea(edges: .top)
         .environmentObject(searchViewModel)
         .onChange(of: inputText) {
             if inputText.isEmpty {

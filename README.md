@@ -8,7 +8,7 @@
 개발환경 : Xcode 15.4, iOS 17<br>
 사용 API : [앱스토어 검색 API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html#//apple_ref/doc/uid/TP40017632-CH3-SW1/ "앱스토어")<br>
 채택한 아키텍쳐: MVVM Architecture<br>
-기술 스택 : Swift, SwiftUI<br>
+기술 스택 : RxSwift, SwiftUI<br>
 
 <br>
 

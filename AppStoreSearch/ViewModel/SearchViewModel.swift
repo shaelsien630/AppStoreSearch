@@ -5,13 +5,25 @@
 //  Created by 최서희 on 8/29/24.
 //
 
+import RxSwift
+import RxCocoa
 import Foundation
 
 class SearchViewModel: ObservableObject {
-    @Published var isLoading: Bool = true
+    let disposeBag = DisposeBag()
+    
+    let isLoading = BehaviorRelay<Bool>(value: true)
+    let appsRelay = BehaviorRelay<[Application]>(value: [])
     @Published var apps: [Application] = []
     
     init() {
+        appsRelay
+            .asObservable()
+            .bind { [weak self] newApps in
+                self?.apps = newApps
+            }
+            .disposed(by: disposeBag)
+        
         self.apps = [
             Application(
                 title: "카카오뱅크",
@@ -21,7 +33,7 @@ class SearchViewModel: ObservableObject {
                 ratingCount: 12657,
                 recommenedAge: "4+",
                 baseLanguage: ["KO"],
-                minimumOsVersion: "13.0",                
+                minimumOsVersion: "13.0",
                 screenShotURLList: [
                     "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/6f/b8/d0/6fb8d0c0-df10-436a-949e-bf504277a1eb/6e511b0d-a668-4e02-a829-a9effd325d93_ios_5.5_01.png/392x696bb.png",
                     "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/58/9d/5a/589d5a31-acca-22f8-68af-65ff722ceeca/64b06241-20db-414f-b368-05ba25a37075_ios_5.5_02.png/392x696bb.png",
@@ -36,37 +48,30 @@ class SearchViewModel: ObservableObject {
         ]
     }
     
-    func fetchSearchList(text: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        isLoading = true
+    
+    func fetchSearchList(text: String) -> Observable<Void> {
+        isLoading.accept(true)
         let urlString = "https://itunes.apple.com/search?entity=software&term=" + text + "&country=kr"
-        if let url = URL(string: urlString) {
-            let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                    let statusCodeError = NSError(domain: "", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey : "Status code: \(httpResponse.statusCode)"])
-                    completion(.failure(statusCodeError))
-                    return
-                }
-                
-                if let dataReceived = data {
-                    do {
-                        let decodedList = try JSONDecoder().decode(SearchResult.self, from: dataReceived)
-                        self.apps = decodedList.results.map { self.convert(result: $0) }
-                        self.isLoading = false // TO-DO :: 실패했을때, count가 0일때 UI 추가하기 - 검색 결과가 없습니다.
-                        completion(.success(()))
-                    } catch {
-                        completion(.failure(error))
-                    }
-                } else {
-                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
+        
+        guard let url = URL(string: urlString) else {
+            return Observable.error(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        }
+        
+        return URLSession.shared.rx.data(request: URLRequest(url: url))
+            .map { data -> Void in
+                do {
+                    let decodedList = try JSONDecoder().decode(SearchResult.self, from: data)
+                    let convertedApps = decodedList.results.map { self.convert(result: $0) }
+                    self.appsRelay.accept(convertedApps)
+                    self.isLoading.accept(false)
+                    return ()
+                } catch {
+                    throw error
                 }
             }
-            dataTask.resume()
-        }
+            .catch { error in
+                Observable.error(error)
+            }
     }
     
     func convert(result: ResultItem) -> Application {

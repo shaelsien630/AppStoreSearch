@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61139A3A2C9D3B0E001DFAD7 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 61139A392C9D3B0E001DFAD7 /* RxCocoa */; };
+		61139A3C2C9D3B0E001DFAD7 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 61139A3B2C9D3B0E001DFAD7 /* RxSwift */; };
+		61139A3E2C9D6553001DFAD7 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61139A3D2C9D6553001DFAD7 /* RatingView.swift */; };
 		61E63E612C800EFE00D761E2 /* AppStoreSearchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E63E602C800EFE00D761E2 /* AppStoreSearchApp.swift */; };
 		61E63E652C800EFF00D761E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E63E642C800EFF00D761E2 /* Assets.xcassets */; };
 		61E63E692C800EFF00D761E2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E63E682C800EFF00D761E2 /* Preview Assets.xcassets */; };
@@ -21,10 +24,10 @@
 		61E63E952C86A69E00D761E2 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E63E942C86A69E00D761E2 /* Trie.swift */; };
 		61E63E972C86A78000D761E2 /* TrieWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E63E962C86A78000D761E2 /* TrieWrapper.swift */; };
 		61E63E9B2C897E7D00D761E2 /* SearchNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E63E9A2C897E7D00D761E2 /* SearchNavigationView.swift */; };
-		61E63E9F2C8AB8B900D761E2 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E63E9E2C8AB8B900D761E2 /* RatingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		61139A3D2C9D6553001DFAD7 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		61E63E5D2C800EFE00D761E2 /* AppStoreSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppStoreSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E63E602C800EFE00D761E2 /* AppStoreSearchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreSearchApp.swift; sourceTree = "<group>"; };
 		61E63E642C800EFF00D761E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,7 +44,6 @@
 		61E63E942C86A69E00D761E2 /* Trie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
 		61E63E962C86A78000D761E2 /* TrieWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrieWrapper.swift; sourceTree = "<group>"; };
 		61E63E9A2C897E7D00D761E2 /* SearchNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationView.swift; sourceTree = "<group>"; };
-		61E63E9E2C8AB8B900D761E2 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingView.swift; path = ../../../AppStoreSearch_StoryBoad/AppStoreSearch/View/RatingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61139A3C2C9D3B0E001DFAD7 /* RxSwift in Frameworks */,
+				61139A3A2C9D3B0E001DFAD7 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +116,7 @@
 				61E63E7F2C869AF800D761E2 /* SearchResultView.swift */,
 				61E63E892C869E3A00D761E2 /* SearchResultRowView.swift */,
 				61E63E8D2C86A20300D761E2 /* DetailView.swift */,
-				61E63E9E2C8AB8B900D761E2 /* RatingView.swift */,
+				61139A3D2C9D6553001DFAD7 /* RatingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -150,6 +154,10 @@
 			dependencies = (
 			);
 			name = AppStoreSearch;
+			packageProductDependencies = (
+				61139A392C9D3B0E001DFAD7 /* RxCocoa */,
+				61139A3B2C9D3B0E001DFAD7 /* RxSwift */,
+			);
 			productName = AppStoreSearch;
 			productReference = 61E63E5D2C800EFE00D761E2 /* AppStoreSearch.app */;
 			productType = "com.apple.product-type.application";
@@ -178,6 +186,9 @@
 				Base,
 			);
 			mainGroup = 61E63E542C800EFE00D761E2;
+			packageReferences = (
+				61139A382C9D3B0E001DFAD7 /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = 61E63E5E2C800EFE00D761E2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -211,12 +222,12 @@
 				61E63E9B2C897E7D00D761E2 /* SearchNavigationView.swift in Sources */,
 				61E63E8C2C86A1F800D761E2 /* SearchView.swift in Sources */,
 				61E63E8E2C86A20300D761E2 /* DetailView.swift in Sources */,
-				61E63E9F2C8AB8B900D761E2 /* RatingView.swift in Sources */,
 				61E63E862C869B5B00D761E2 /* RecentSearchView.swift in Sources */,
 				61E63E802C869AF800D761E2 /* SearchResultView.swift in Sources */,
 				61E63E8A2C869E3B00D761E2 /* SearchResultRowView.swift in Sources */,
 				61E63E612C800EFE00D761E2 /* AppStoreSearchApp.swift in Sources */,
 				61E63E902C86A28E00D761E2 /* RecentSearchMatchesView.swift in Sources */,
+				61139A3E2C9D6553001DFAD7 /* RatingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +446,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		61139A382C9D3B0E001DFAD7 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		61139A392C9D3B0E001DFAD7 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 61139A382C9D3B0E001DFAD7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		61139A3B2C9D3B0E001DFAD7 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 61139A382C9D3B0E001DFAD7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 61E63E552C800EFE00D761E2 /* Project object */;
 }

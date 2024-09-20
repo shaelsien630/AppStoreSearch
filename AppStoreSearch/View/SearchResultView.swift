@@ -12,7 +12,7 @@ struct SearchResultView: View {
     
     var body: some View {
         List {
-            ForEach(0..<searchViewModel.apps.count, id: \.self) { index in
+            ForEach(searchViewModel.apps.indices, id: \.self) { index in
                 NavigationLink {
                     DetailView(index: index)
                 } label: {

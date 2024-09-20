@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct SearchView: View {
-    @StateObject var searchViewModel: SearchViewModel = SearchViewModel()
+    @StateObject var searchViewModel = SearchViewModel()
     @StateObject var trieWrapper = TrieWrapper(words: ["버스 시간표", "포토샵", "쇼핑", "지하철", "카카오뱅크"])
     @State private var inputText: String = ""
     @State private var isEditing: Bool = false
     @State private var isSearch: Bool = false
+    @State private var isLoading: Bool = false
     
     var body: some View {
         SearchNavigationView(inputText: $inputText, isSearch: $isSearch, placeholder: "게임, 앱, 스토리 등", onSubmit: { // 직접 검색
@@ -22,7 +23,7 @@ struct SearchView: View {
         }) {
             VStack {
                 if isSearch {
-                    if searchViewModel.isLoading { ProgressView() }
+                    if isLoading { ProgressView() }
                     else { SearchResultView() } // 검색 결과 화면
                 } else if isEditing {
                     RecentSearchMatchesView(trieWrapper: trieWrapper, inputText: $inputText, onSubmit: {
@@ -40,6 +41,13 @@ struct SearchView: View {
         }
         .ignoresSafeArea(edges: .top)
         .environmentObject(searchViewModel)
+        .onAppear {
+            searchViewModel.isLoading
+                .bind { isLoading in
+                    self.isLoading = isLoading
+                }
+                .disposed(by: searchViewModel.disposeBag)
+        }
         .onChange(of: inputText) {
             if inputText.isEmpty {
                 isEditing = false
@@ -57,13 +65,15 @@ struct SearchView: View {
 
 extension SearchView {
     func searchAppList(text: String) {
-        searchViewModel.fetchSearchList(text: text) { result in
-            switch result {
-            case .success(_):
-                print("Fetch successfully - Search : \(text)")
-            case .failure(let error):
-                print("Fetch Failed - \(error.localizedDescription)")
-            }
-        }
+        searchViewModel.fetchSearchList(text: text)
+            .subscribe(
+                onNext: {
+                    print("Fetch successfully - Search: \(text)")
+                },
+                onError: { error in
+                    print("Fetch failed - \(error.localizedDescription)")
+                }
+            )
+            .disposed(by: searchViewModel.disposeBag)
     }
 }

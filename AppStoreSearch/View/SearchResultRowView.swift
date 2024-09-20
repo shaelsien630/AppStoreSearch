@@ -88,7 +88,7 @@ struct SearchResultRowView: View {
             }
             .padding(.horizontal)
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 6)
     }
 }
 
